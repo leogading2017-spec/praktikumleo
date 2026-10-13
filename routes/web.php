@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MahasiswaController;
 
 // ===== Identitas =====
 Route::get('/identitas', fn () => 'Leo Gading Astrada - 242520120 - TI C');
@@ -55,9 +56,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/pengaturan', fn () => 'Pengaturan Admin')->name('pengaturan');
 });
 
-// ===== 3.6 Redirect dan fallback (fallback WAJIB paling bawah) =====
+// ===== 3.6 Redirect =====
 Route::redirect('/beranda', '/');
 
+// ===== Latihan Controller dan Blade: Profil Mahasiswa =====
+Route::get('/profil-mahasiswa', [MahasiswaController::class, 'profil'])
+    ->name('mahasiswa.profil');
+
+// ===== Latihan Controller dan Blade: Daftar Mahasiswa =====
+Route::get('/mahasiswa', [MahasiswaController::class, 'daftar'])
+    ->name('mahasiswa.daftar');
+
+// ===== Latihan Controller dan Blade: Detail Mahasiswa =====
+Route::get('/mahasiswa/{nim}', [MahasiswaController::class, 'detail'])
+    ->name('mahasiswa.detail');
+
+// ===== Fallback wajib paling bawah =====
 Route::fallback(function () {
     return response('Halaman tidak ditemukan (kustom).', 404);
 });
